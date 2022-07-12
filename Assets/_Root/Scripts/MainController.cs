@@ -40,6 +40,7 @@ internal class MainController : BaseController
         {
             case GameState.Start:
                 _mainMenuController = new MainMenuController(_placeForUi, _profilePlayer);
+                AnalyticsManager.Instance.SendMainMenuOpened();
                 _gameController?.Dispose();
                 _settingsMenuController?.Dispose();
                 break;

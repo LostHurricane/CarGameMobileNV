@@ -16,12 +16,12 @@ MonoBehaviour:
   _iOsGameId: 4836248
   <Interstitial>k__BackingField:
     <Enabled>k__BackingField: 1
-    _androidId: 4836249
-    _iosId: 4836248
+    _androidId: Interstitial_Android
+    _iosId: Interstitial_iOS
   <Rewarded>k__BackingField:
     <Enabled>k__BackingField: 1
-    _androidId: 4836249
-    _iosId: 4836248
+    _androidId: Rewarded_Android
+    _iosId: Rewarded_iOS
   <Banner>k__BackingField:
     <Enabled>k__BackingField: 0
     _androidId: 

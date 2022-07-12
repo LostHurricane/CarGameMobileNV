@@ -6,25 +6,29 @@ using Tool;
 
 namespace Services.Ads.UnityAds
 {
-    internal class UnityAdsService : Service<UnityAdsService> , IUnityAdsInitializationListener, IAdsService
+    internal class UnityAdsService : Service<UnityAdsService> , IUnityAdsInitializationListener, IAdsService, IDisposable
     {
-        [Header("Components")]
-        [SerializeField] private UnityAdsSettings _settings;
+        private readonly ResourcePath _settingsPath = new ResourcePath("Services/UnityAdsSettings");
 
-        [field: Header("Events")]
-        [field: SerializeField] public UnityEvent Initialized { get; private set; } //поправить
+        private UnityAdsSettings _settings;
+        
+        public UnityEvent Initialized { get; private set; }
 
         public IAdsPlayer InterstitialPlayer { get; private set; }
         public IAdsPlayer RewardedPlayer { get; private set; }
         public IAdsPlayer BannerPlayer { get; private set; }
         public bool IsInitialized => Advertisement.isInitialized;
 
-
-        private void Awake()
+        public UnityAdsService () : base ()
         {
+            Initialized = new UnityEvent();
+
+            _settings = ResourcesLoader.LoadScriptableObject<UnityAdsSettings>(_settingsPath);
+            Initialized.AddListener(InitializePlayers);
             InitializeAds();
-            InitializePlayers();
         }
+
+
 
         private void InitializeAds() =>
             Advertisement.Initialize(
@@ -35,6 +39,7 @@ namespace Services.Ads.UnityAds
 
         private void InitializePlayers()
         {
+            Log($"Init players");
             InterstitialPlayer = CreateInterstitial();
             RewardedPlayer = CreateRewarded();
             BannerPlayer = CreateBanner();
@@ -59,6 +64,7 @@ namespace Services.Ads.UnityAds
         {
             Log("Initialization complete.");
             Initialized?.Invoke();
+            
         }
 
         void IUnityAdsInitializationListener.OnInitializationFailed(UnityAdsInitializationError error, string message) =>
@@ -66,6 +72,8 @@ namespace Services.Ads.UnityAds
 
         public void Dispose()
         {
+            Initialized.RemoveListener(InitializePlayers);
+
             if (InterstitialPlayer is IDisposable interstitialPlayer)
             {
                 interstitialPlayer.Dispose();

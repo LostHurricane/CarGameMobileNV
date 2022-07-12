@@ -23,7 +23,7 @@ namespace Services.Ads.UnityAds
 
         private void OnSkipping() => Debug.Log("Skipped! No reward for you!");
 
-        private void OnFinishing() => Debug.Log("You watches the whole thing! It was like 3 hours!");
+        private void OnFinishing() => Debug.Log("You watched the whole thing! It was like 3 hours!");
 
 
 
