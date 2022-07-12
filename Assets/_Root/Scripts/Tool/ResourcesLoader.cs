@@ -9,5 +9,11 @@ namespace Tool
 
         public static GameObject LoadPrefab(ResourcePath path) =>
             Resources.Load<GameObject>(path.PathResource);
+
+        public static T LoadScriptableObject<T>(ResourcePath path) where T: ScriptableObject
+        {
+            return Resources.Load<T>(path.PathResource);
+        }
+            
     }
 }
