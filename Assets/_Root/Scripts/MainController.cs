@@ -2,6 +2,8 @@ using Ui;
 using Game;
 using Profile;
 using UnityEngine;
+using Services.Analytics;
+
 
 internal class MainController : BaseController
 {
@@ -9,8 +11,8 @@ internal class MainController : BaseController
     private readonly ProfilePlayer _profilePlayer;
 
     private MainMenuController _mainMenuController;
-    private GameController _gameController;
     private SettingsMenuController _settingsMenuController;
+    private GameController _gameController;
 
 
     public MainController(Transform placeForUi, ProfilePlayer profilePlayer)
@@ -20,6 +22,7 @@ internal class MainController : BaseController
 
         profilePlayer.CurrentState.SubscribeOnChange(OnChangeGameState);
         OnChangeGameState(_profilePlayer.CurrentState.Value);
+        AnalyticsManager.Instance.SendGameControllerStarted();
     }
 
     protected override void OnDispose()
@@ -47,10 +50,12 @@ internal class MainController : BaseController
             case GameState.Game:
                 _gameController = new GameController(_profilePlayer);
                 _mainMenuController?.Dispose();
+                _settingsMenuController?.Dispose();
                 break;
             default:
                 _mainMenuController?.Dispose();
                 _gameController?.Dispose();
+                _settingsMenuController?.Dispose();
                 break;
         }
     }
