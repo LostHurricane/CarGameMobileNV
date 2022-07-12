@@ -16,6 +16,7 @@ namespace Services.Analytics.UnityAnalytics
             emptyDictionary = new Dictionary<string, object>()
             {
                 { "null", 0 }
+                
             };
         }
         public void SendEvent(string eventName)

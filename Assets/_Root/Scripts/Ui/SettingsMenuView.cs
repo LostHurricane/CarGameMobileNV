@@ -8,11 +8,28 @@ namespace Ui
     {
         [SerializeField] private Button _buttonBack;
 
+        [SerializeField] private Button _buttonBuy;
 
-        public void Init(UnityAction ToMainMenu) =>
+        [SerializeField] private Button _buttonAds;
+
+
+        public void Init(UnityAction ToMainMenu, UnityAction BuyStuff, UnityAction ToWatchAds)
+        {
             _buttonBack.onClick.AddListener(ToMainMenu);
+            _buttonBuy.onClick.AddListener(BuyStuff);
+            _buttonAds.onClick.AddListener(ToWatchAds);
+            
 
-        public void OnDestroy() =>
+        }
+
+        private void BuyStuff() =>
+    Debug.Log("You just bougt stuff");
+
+        public void OnDestroy()
+        {
             _buttonBack.onClick.RemoveAllListeners();
+            _buttonBuy.onClick.RemoveAllListeners();
+            _buttonAds.onClick.RemoveAllListeners();
+        }
     }
 }

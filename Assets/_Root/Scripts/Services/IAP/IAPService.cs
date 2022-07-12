@@ -1,18 +1,19 @@
+using Tool;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Purchasing;
 
 namespace Services.IAP
 {
-    internal class IAPService : MonoBehaviour, IStoreListener, IIAPService
+    internal class IAPService : Service<IAPService>, IStoreListener, IIAPService
     {
-        [Header("Components")]
-        [SerializeField] private ProductLibrary _productLibrary;
+        private readonly ResourcePath _settingsPath = new ResourcePath("Services/ProductLibrary");
 
-        [field: Header("Events")]
-        [field: SerializeField] public UnityEvent Initialized { get; private set; }
-        [field: SerializeField] public UnityEvent PurchaseSucceed { get; private set; }
-        [field: SerializeField] public UnityEvent PurchaseFailed { get; private set; }
+        private ProductLibrary _productLibrary;
+
+        public UnityEvent Initialized { get; private set; }
+        public UnityEvent PurchaseSucceed { get; private set; }
+        public UnityEvent PurchaseFailed { get; private set; }
         public bool IsInitialized { get; private set; }
 
         private IExtensionProvider _extensionProvider;
@@ -20,9 +21,12 @@ namespace Services.IAP
         private PurchaseRestorer _purchaseRestorer;
         private IStoreController _controller;
 
-
-        private void Awake() =>
+        public IAPService () : base ()
+        {
+            _productLibrary = ResourcesLoader.LoadScriptableObject<ProductLibrary>(_settingsPath);
             InitializeProducts();
+            Log("Init IAP");
+        }
 
         private void InitializeProducts()
         {

@@ -5,7 +5,6 @@ using Unity.Services.Core;
 using UnityEngine;
 
 using Services.Analytics;
-using Services.Ads.UnityAds;
 
 
 internal class EntryPoint : MonoBehaviour
@@ -26,8 +25,7 @@ internal class EntryPoint : MonoBehaviour
 
         _mainController = new MainController(_placeForUi, profilePlayer);
 
-        if (UnityAdsService.Instance.IsInitialized) OnAdsInitialized();
-        else UnityAdsService.Instance.Initialized.AddListener(OnAdsInitialized);
+       
     }
 
     async void InitializeAsync()
@@ -38,9 +36,8 @@ internal class EntryPoint : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnityAdsService.Instance.Initialized.RemoveListener(OnAdsInitialized);
+
         _mainController.Dispose();
     }
 
-    private void OnAdsInitialized() => UnityAdsService.Instance.InterstitialPlayer.Play();
 }
