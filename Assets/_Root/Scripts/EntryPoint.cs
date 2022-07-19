@@ -16,16 +16,11 @@ internal class EntryPoint : MonoBehaviour
 
     private MainController _mainController;
 
-
     private void Start()
     {
         InitializeAsync();
-
         var profilePlayer = new ProfilePlayer(SpeedCar, InitialState);
-
         _mainController = new MainController(_placeForUi, profilePlayer);
-
-       
     }
 
     async void InitializeAsync()
@@ -36,7 +31,6 @@ internal class EntryPoint : MonoBehaviour
 
     private void OnDestroy()
     {
-
         _mainController.Dispose();
     }
 

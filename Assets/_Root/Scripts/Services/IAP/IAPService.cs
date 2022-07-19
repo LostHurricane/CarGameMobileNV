@@ -9,7 +9,7 @@ namespace Services.IAP
     {
         private readonly ResourcePath _settingsPath = new ResourcePath("Services/ProductLibrary");
 
-        private ProductLibrary _productLibrary;
+        private readonly ProductLibrary _productLibrary;
 
         public UnityEvent Initialized { get; private set; }
         public UnityEvent PurchaseSucceed { get; private set; }

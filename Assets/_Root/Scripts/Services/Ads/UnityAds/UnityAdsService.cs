@@ -24,7 +24,7 @@ namespace Services.Ads.UnityAds
             Initialized = new UnityEvent();
 
             _settings = ResourcesLoader.LoadScriptableObject<UnityAdsSettings>(_settingsPath);
-            Initialized.AddListener(InitializePlayers);
+            InitializePlayers();
             InitializeAds();
         }
 
@@ -53,7 +53,7 @@ namespace Services.Ads.UnityAds
 
         private IAdsPlayer CreateRewarded() =>
             _settings.Rewarded.Enabled
-                ? new RewardedPlayer (_settings.Interstitial.Id)
+                ? new RewardedPlayer (_settings.Rewarded.Id)
                 :new StubPlayer("");
 
         private IAdsPlayer CreateBanner() =>
@@ -72,8 +72,6 @@ namespace Services.Ads.UnityAds
 
         public void Dispose()
         {
-            Initialized.RemoveListener(InitializePlayers);
-
             if (InterstitialPlayer is IDisposable interstitialPlayer)
             {
                 interstitialPlayer.Dispose();

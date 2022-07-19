@@ -15,15 +15,14 @@ namespace Ui
         private readonly ResourcePath _resourcePath = new ResourcePath("Prefabs/SettingsMenu");
         private readonly ProfilePlayer _profilePlayer;
         private readonly SettingsMenuView _view;
-        private IAPService iAPService;
+
 
 
         public SettingsMenuController(Transform placeForUi, ProfilePlayer profilePlayer)
         {
             _profilePlayer = profilePlayer;
             _view = LoadView(placeForUi);
-            _view.Init(StartGame, BuyStuff, ShowAds);
-            Debug.Log($"iAPService {IAPService.Instance.IsInitialized}");
+            _view.Init(StartGame);
         }
 
         private SettingsMenuView LoadView(Transform placeForUi)
@@ -53,7 +52,7 @@ namespace Ui
             UnityAdsService.Instance.Initialized.RemoveListener(ShowRewardAds);
         }
 
-        private void ShowRewardAds() => UnityAdsService.Instance.InterstitialPlayer.Play();
+        private void ShowRewardAds() => UnityAdsService.Instance.RewardedPlayer.Play();
 
     }
 }

@@ -22,7 +22,6 @@ internal class MainController : BaseController
 
         profilePlayer.CurrentState.SubscribeOnChange(OnChangeGameState);
         OnChangeGameState(_profilePlayer.CurrentState.Value);
-        AnalyticsManager.Instance.SendGameControllerStarted();
     }
 
     protected override void OnDispose()

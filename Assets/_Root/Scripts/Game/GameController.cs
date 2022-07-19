@@ -2,7 +2,9 @@ using Game.Car;
 using Game.InputLogic;
 using Game.TapeBackground;
 using Profile;
+using Services.Analytics;
 using Tool;
+
 
 namespace Game
 {
@@ -10,6 +12,7 @@ namespace Game
     {
         public GameController(ProfilePlayer profilePlayer)
         {
+            AnalyticsManager.Instance.SendGameLevelStarted();
             var leftMoveDiff = new SubscriptionProperty<float>();
             var rightMoveDiff = new SubscriptionProperty<float>();
 

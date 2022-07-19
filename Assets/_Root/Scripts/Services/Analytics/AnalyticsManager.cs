@@ -7,7 +7,7 @@ namespace Services.Analytics
 {
     internal class AnalyticsManager : Service <AnalyticsManager>
     {
-        private IAnalyticsService[] _services;
+        private readonly IAnalyticsService[] _services;
 
         public AnalyticsManager(): base()
         {
@@ -20,7 +20,7 @@ namespace Services.Analytics
         public void SendMainMenuOpened() =>
             SendEvent("MainMenuOpened");
 
-        public void SendGameControllerStarted() =>
+        public void SendGameLevelStarted() =>
             SendEvent("GameControllerStarted");
 
 
